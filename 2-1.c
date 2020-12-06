@@ -21,16 +21,16 @@ int main(int argc, char *argv[]) {
 	 if (bytes == -1) {
 	 	printf ("Error with writing\n");
 		perror("error2");
-        return 1;
+        	return 1;
 	}
 	if ((int) bytes <  size) {
-    	printf ("Writing is unsucessful\n");
-    }
+    		printf ("Writing is unsucessful\n");
+    	}
   
 	cfd = close(fd);
 	if (cfd != 0) {
 		 perror("Unsucessful closing");
-    	return 1;
+    		return 1;
 	}
 	
 	return 0;
