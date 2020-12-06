@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 	printf("Size: %llu\n", (unsigned long long)stat_buf.st_size);
 	printf("Used space: %llu\n", (unsigned long long)stat_buf.st_blocks * S_BLKSIZE);
 	printf("Last status change:       %s", ctime(&stat_buf.st_ctime));
-  printf("Last file access:         %s", ctime(&stat_buf.st_atime));
-  printf("Last file modification:   %s", ctime(&stat_buf.st_mtime));
+        printf("Last file access:         %s", ctime(&stat_buf.st_atime));
+        printf("Last file modification:   %s", ctime(&stat_buf.st_mtime));
 	return 0;
 }
