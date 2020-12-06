@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[]) {
 	int fd, cfildes = 0;
-    if (argc != 3) {
+    	if (argc != 3) {
 		printf ("Incorrect Usage");
 		return 1;
 	 }
