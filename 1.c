@@ -10,10 +10,10 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	struct stat stat_buf;
-	if (lstat (argv[1], &stat_buf) == -1) {
-		perror("Failed to stat");
-		return 2;
+	struct stat stat_buf;      
+	if (lstat (argv[1], &stat_buf) == -1) {     //получить статус файла 
+		perror("Failed to stat");// lstat идентична stat, но в случае, если обрабатывается символьная ссылка, то возвращается
+                return 2;               //информация о самой ссылке, а не о файле, на который она ссылается.
 	}
 
 	printf("Mode: %06o\n", stat_buf.st_mode);
