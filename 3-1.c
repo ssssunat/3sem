@@ -12,12 +12,12 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-    struct stat stat_buf;
-    if (lstat(argv[1], &stat_buf) == -1){
+    struct stat stat_file;
+    if (lstat(argv[1], &stat_file) == -1){
         perror("Failed to stat");
         return 2;
     }  
-    if ((stat_buf.st_mode & S_IFMT) != S_IFREG)
+    if ((stat_file.st_mode & S_IFMT) != S_IFREG)
     {
         printf("Error: Not regular\n");
         return 2;
