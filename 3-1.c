@@ -20,46 +20,46 @@ int main(int argc, char *argv[]) {
         printf("Error: Not regular\n");
         return 2;
     }
-	int src_fd = open(argv[1], O_RDONLY);
-	if (src_fd == -1) {
+	int file1fd = open(argv[1], O_RDONLY);
+	if (file1fd == -1) {
 		perror("Failed to open source file");
 		return 2;
 	}
-	int dst_fd = open(argv[2], O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
-	if (dst_fd == -1) {
+	int file2fd = open(argv[2], O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+	if (file2fd == -1) {
 		perror("Failed to open target file");
 		return 2;
 	}
 	
 	while (1) {
 		char buf[512];
-		ssize_t buf_size = read(src_fd, buf, sizeof(buf));
+		ssize_t bufsize = read(file1fd, buf, sizeof(buf));
 
-		if (buf_size == -1) {
+		if (bufsize == -1) {
 			perror("Failed to read a block");
 			close(src_fd);
 			close(dst_fd);
-            return 2;
+            		return 2;
 		}
-		if (buf_size == 0) {
+		if (bufsize == 0) {
 			break;
 		}
-		size_t local_buf_size = (size_t)buf_size;
-		size_t bytes_written = 0;
-		while (bytes_written < local_buf_size) {
-			ssize_t write_result = write(dst_fd, &buf[bytes_written], local_buf_size - bytes_written);
+		size_t local_buf_size = (size_t)bufsize;
+		size_t b_written = 0;
+		while (b_written < local_buf_size) {
+			ssize_t write_result = write(file2_fd, &buf[b_written], local_buf_size - b_written);
 
 			if (write_result == -1) {
 				perror("Failed to write");
-				close(src_fd);
-				close(dst_fd);
+				close(file1_fd);
+				close(file2_fd);
 				return 3;
 			}
-			bytes_written += (size_t)write_result;
+			bwritten += (size_t)write_result;
 		}
     }
-    fsync(dst_fd);
-	close(src_fd);
-	close(dst_fd);
+    fsync(file2_fd);
+	close(file1_fd);
+	close(file2_fd);
 	return 0;
 }
