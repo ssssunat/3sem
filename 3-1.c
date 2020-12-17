@@ -11,15 +11,15 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-    struct stat stat_file;
-    if (lstat(argv[1], &stat_file) == -1) {
-        perror("Failed to stat");
-        return 2;
-    }  
-    if ((stat_file.st_mode & S_IFMT) != S_IFREG) {
-        printf("Error: Not regular\n");
-        return 2;
-    }
+    	struct stat stat_file;
+    	if (lstat(argv[1], &stat_file) == -1) {
+        	perror("Failed to stat");
+        	return 2;
+    	}  
+    	if ((stat_file.st_mode & S_IFMT) != S_IFREG) {
+        	printf("Error: Not regular\n");
+        	return 2;
+    	}
 	int file1fd = open(argv[1], O_RDONLY);
 	if (file1fd == -1) {
 		perror("Failed to open source file");
@@ -45,9 +45,9 @@ int main(int argc, char *argv[]) {
 			break;
 		}
 		size_t local_buf_size = (size_t)bufsize;
-		size_t b_written = 0;
-		while (b_written < local_buf_size) {
-			ssize_t write_result = write(file2_fd, &buf[b_written], local_buf_size - b_written);
+		size_t bwritten = 0;
+		while (bwritten < local_buf_size) {
+			ssize_t write_result = write(file2_fd, &buf[b_written], local_buf_size - bwritten);
 
 			if (write_result == -1) {
 				perror("Failed to write");
@@ -57,8 +57,8 @@ int main(int argc, char *argv[]) {
 			}
 			bwritten += (size_t)write_result;
 		}
-    }
-    fsync(file2_fd);
+    	}
+   	fsync(file2_fd);
 	close(file1_fd);
 	close(file2_fd);
 	return 0;
