@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 	}
 	
 	while (1) {
-		uint8_t buf[4096];
+		char buf[512];
 		ssize_t buf_size = read(src_fd, buf, sizeof(buf));
 
 		if (buf_size == -1) {
