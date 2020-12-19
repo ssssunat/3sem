@@ -25,8 +25,8 @@ int main(int argc, char *argv[]) {
                 return 2;
         }
         struct dirent *str;
+	printf("File type   File name\n");
         while ((str = readdir(dir)) != NULL) {
-                printf("File type:\t");
                 if ((str->d_type) == DT_UNKNOWN) {
                         if (lstat(str->d_name, &file) < 0) {
                                 perror("Failed to stat");
@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
                                 case DT_SOCK: printf("Socket");
                         }
                 }
-                printf("Name: %s \n", str->d_name);
+                printf("%s \n", str->d_name);
         }
         closedir(dir);
 	return 0;
