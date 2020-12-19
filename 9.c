@@ -2,7 +2,7 @@
 #include <sys/param.h>
 #include <sys/mount.h>
 #include <sys/statvfs.h>
-#include <sys/statfs.h>
+#include <sys/statvfs.h>
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     struct statfs buf;
-    if (statfs(argv[1], &buf) == -1) {
+    if (statvfs(argv[1], &buf) == -1) {
         perror("Failed to statfs");
         return 1;
     }
