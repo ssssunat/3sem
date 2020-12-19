@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
         while(size > cnt){
                 ssize_t bytes = write(fd, argv[2], size);//В случае успеха возвращается количество записанных байтов, В случае ошибки возвращается -1
                 if(bytes == -1){
-                        perror("govno cod:");
+                        perror("Failed to write:");
                         close(fd);
                         return 1;
                 }
