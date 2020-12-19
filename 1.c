@@ -4,6 +4,15 @@
 #include <stdio.h>
 #include <time.h>
 
+#ifdef S_BLKSIZE
+#else
+#include <sys/param.h>
+#ifdef DEV_BSIZE
+#define BL_SIZE DEV_BSIZE
+#else
+#error "Impossible to determine block size"
+#endif
+#endif
 int main(int argc, char *argv[]) {
 	if (argc != 2) {
 		printf ("Usage: %s some.file\n", argv[0]);
@@ -21,6 +30,6 @@ int main(int argc, char *argv[]) {
 	printf("Used space: %llu\n", (unsigned long long)stat_buf.st_blocks * S_BLKSIZE);
 	printf("Last status change:       %s", ctime(&stat_buf.st_ctime));
         printf("Last file access:         %s", ctime(&stat_buf.st_atime));
-        printf("Last file modification:   %s", ctime(&stat_buf.st_mtime));
+        printf("Last file modification UTC+03:00:   %s", ctime(&stat_buf.st_mtime));
 	return 0;
 }
