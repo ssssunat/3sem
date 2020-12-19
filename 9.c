@@ -2,14 +2,13 @@
 #include <sys/param.h>
 #include <sys/mount.h>
 #include <sys/statvfs.h>
-#include <sys/statvfs.h>
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         printf("Usage: %s some.file\n", argv[0]);
         return 1;
     }
-    struct statfs buf;
+    struct statvfs buf;
     if (statvfs(argv[1], &buf) == -1) {
         perror("Failed to statvfs");
         return 1;
