@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
                                 case DT_FIFO: printf("Fifo/pipe		"); break;
                                 case DT_LNK: printf("Symbolic link	"); break;
                                 case DT_REG: printf("Regular file	"); break;
-                                case DT_SOCK: printf("Socket	");
+                                case DT_SOCK: printf("Socket	"); break;
                         }
                 }
                 printf("%s \n", str->d_name);
