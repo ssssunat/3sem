@@ -28,8 +28,8 @@ int main(int argc, char *argv[]) {
 	printf("Mode: %06o\n", stat_buf.st_mode);
 	printf("Size: %llu\n", (unsigned long long)stat_buf.st_size);
 	printf("Used space: %llu\n", (unsigned long long)stat_buf.st_blocks * S_BLKSIZE);
-	printf("Last status change:       %s", ctime(&stat_buf.st_ctime));
-        printf("Last file access:         %s", ctime(&stat_buf.st_atime));
+	printf("Last status change UTC+03:00:       %s", ctime(&stat_buf.st_ctime));
+        printf("Last file access UTC+03:00:         %s", ctime(&stat_buf.st_atime));
         printf("Last file modification UTC+03:00:   %s", ctime(&stat_buf.st_mtime));
 	return 0;
 }
