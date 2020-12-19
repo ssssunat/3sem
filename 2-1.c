@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[]) {
         if (argc != 3) {
-                printf("Usage: %s source file target file\n", argv[0]);
+                printf("Usage: %s source file and string\n", argv[0]);
                 return 1;
         }
         int fd = open(argv[1], O_APPEND | O_RDWR | O_CREAT, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);//open  превращает имя файла в дескриптор файла или -1 если произошла ошибка
