@@ -1,38 +1,32 @@
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <stdio.h> 
+#include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 
 int main(int argc, char *argv[]) {
-	int fd, cfd = 0;
-    	if (argc != 3) {
-		printf ("Incorrect Usage");
-		return 1;
-	 }
-	 fd = open(argv[1], O_APPEND | O_RDWR | O_CREAT, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);//open  превращает имя файла в дескриптор файла или -1 если произошла ошибка
-	 if (fd == -1) {
-		   perror("Cannot create or modify file\n");
-		   return 1;
-	 }
-  
-	 int size = strlen(argv[2]);
-	 ssize_t bytes =  write(fd, argv[2], size);//В случае успеха возвращается количество записанных байтов, В случае ошибки возвращается -1
-	 if (bytes == -1) {
-	 	printf ("Error with writing\n");
-		perror("error2");
-        	return 1;
-	}
-	if ((int) bytes <  size) {    
-     		printf ("Writing is unsucessful\n");
-    	}
-  
-	cfd = close(fd);
-	if (cfd != 0) {
-		 perror("Unsucessful closing");
-    		return 1;
-	}
-	
-	return 0;
+        if (argc != 3) {
+                printf ("Incorrect Usage");
+                return 1;
+        }
+        int fd = open(argv[1], O_APPEND | O_RDWR | O_CREAT, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);//open  превращает имя файла в дескриптор файла или -1 если произошла ошибка
+        if (fd == -1) {
+                perror("Cannot create or modify file\n");
+                return 1;
+         }
+        int size = strlen(argv[2]);
+        int cnt = 0;
+        while(size > cnt){
+                ssize_t bytes = write(fd, argv[2], size);//В случае успеха возвращается количество записанных байтов, В случае ошибки возвращается -1
+                if(bytes == -1){
+                        perror("govno cod:");
+                        close(fd);
+                        return 1;
+                }
+                cnt += bytes;
+        }
+        close(fd);
+        return 0;
 
 }
+
