@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
     }
     struct statfs buf;
     if (statvfs(argv[1], &buf) == -1) {
-        perror("Failed to statfs");
+        perror("Failed to statvfs");
         return 1;
     }
     printf("Total: %lu\n", buf.f_frsize * buf.f_blocks);
