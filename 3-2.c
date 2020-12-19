@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
                 return 2;
         }
         off_t bytes_read = 0;
-        off_t all_bytes_written = 0;
+        off_t all_bytes_written = 0;  //pread, pwrite ,читать, записывать со смещением
         while (1){
                 char buf[512];
                 ssize_t bufsize = pread(file1fd, buf, sizeof(buf), bytes_read);
