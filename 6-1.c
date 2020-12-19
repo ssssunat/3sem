@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
                 return 2;
         }
         struct dirent *str;
-	printf("File type   File name\n");
+	printf("File type	File name\n");
         while ((str = readdir(dir)) != NULL) {
                 if ((str->d_type) == DT_UNKNOWN) {
                         if (lstat(str->d_name, &file) < 0) {
