@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
         int size = strlen(argv[2]);
         int cnt = 0;
         while(size > cnt){
-                ssize_t bytes = write(fd, argv[2], size);//В случае успеха возвращается количество записанных байтов, В случае ошибки возвращается -1
+                ssize_t bytes = write(fd, argv[2] + cnt, size - cnt);//В случае успеха возвращается количество записанных байтов, В случае ошибки возвращается -1
                 if(bytes == -1){
                         perror("Failed to write:");
                         close(fd);
