@@ -15,54 +15,55 @@ int main(int argc, char *argv[]) {
         perror("Failed to stat");
         return 2;
     }
-    if ((filestat.st_mode & S_IFMT) != S_IFREG) {
+  if ((filestat.st_mode & S_IFMT) != S_IFREG) {
         printf("Error: Not regular\n");
         return 2;
     }
 
-	int file1_fd = open(argv[1], O_RDONLY);
-	if (file1_fd == -1){
-		perror("Failed to open source file");
-		return 2;
-	}
-	int file2_fd = open(argv[2], O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
-	if (file2_fd == -1){
-		perror("Failed to open target file");
-		return 2;
-	}
-	off_t bytes_read = 0;
-    	off_t all_bytes_written = 0;
-	while (1){
-		char buf[512];
-		ssize_t buf_size = pread(file1_fd, buf, sizeof(buf), bytes_read);
+        int file1fd = open(argv[1], O_RDONLY);
+        if (file1fd == -1) {
+                perror("Failed to open source file");
+                return 2;
+        }
+        int file2fd = open(argv[2], O_WRONLY|O_CREAT|O_TRUNC, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+        if (file2fd == -1) {
+                perror("Failed to open target file");
+                return 2;
+        }
+        off_t bytes_read = 0;
+        off_t all_bytes_written = 0;
+        while (1){
+                char buf[512];
+                ssize_t bufsize = pread(file1fd, buf, sizeof(buf), bytes_read);
 
-		if (buf_size == -1) {
-			perror("Failed to read a block");
-			close(file1_fd);
-			close(file2_fd);
-            		return 2;
-		}
-		if (buf_size == 0){
-			break;
-		}
-       		bytes_read += buf_size;
-		size_t local_buf_size = (size_t)buf_size;
-		size_t bytes_written = 0;
-		while (bytes_written < local_buf_size) {
-			ssize_t write_result = pwrite(file2_fd, &buf[bytes_written], local_buf_size - bytes_written, all_bytes_written);
+                if (bufsize == -1) {
+                        perror("Failed to read a block");
+                        close(file1fd);
+                        close(file2fd);
+                        return 2;
+                }
+                if (bufsize == 0){
+                        break;
+                }
+                bytes_read += bufsize;
+                size_t size = (size_t)bufsize;
+                size_t bwritten = 0;
+                while (size > bwritten) {
+                        ssize_t write_result = pwrite(file2fd, &buf[bwritten], size - bwritten, all_bytes_written);
 
-			if (write_result == -1) {
-				perror("Failed to write");
-				close(file1_fd);
-				close(file2_fd);
-				return 3;
-			}
-			bytes_written += (size_t)write_result;
-            		all_bytes_written += (off_t)write_result;
-		}		
-	}
-    	fsync(file2_fd);
-	close(file1_fd);
-	close(file1_fd);
-	return 0;
+                        if (write_result == -1) {
+                                perror("Failed to write");
+                                close(file1fd);
+                                close(file2fd);
+                                return 3;
+                        }
+                        bwritten += (size_t)write_result;
+                        all_bytes_written += (off_t)write_result;
+                }
+        }
+        fsync(file2fd);
+        close(file1fd);
+        close(file1fd);
+        return 0;
 }
+
